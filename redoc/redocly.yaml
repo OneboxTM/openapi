@@ -1,0 +1,22 @@
+
+extends:
+  -  recommended
+rules:
+  info-license: off
+  operation-operationId: off
+  paths-kebab-case: error
+  no-http-verbs-in-paths:
+    severity: error
+    splitIntoWords: true
+  rule/operation-description:
+    subject:
+      type: Operation
+      property: description
+    assertions:
+      defined: true
+      minLength: 30
+  rule/properties-snakecase-screaming:
+    subject:
+      type: SchemaProperties
+    assertions:
+      pattern: /^[a-z0-9]+(_[a-z0-9]+)*$|^[A-Z0-9]+(_[A-Z0-9]+)*$/
