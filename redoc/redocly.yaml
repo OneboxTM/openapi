@@ -4,6 +4,8 @@ extends:
 rules:
   info-license: off
   operation-operationId: off
+  operation-2xx-response: error
+  operation-4xx-response: error
   paths-kebab-case: error
   no-http-verbs-in-paths:
     severity: error
