@@ -1,12 +1,12 @@
-
 extends:
-  -  recommended
+  - recommended
 rules:
   info-license: off
   operation-operationId: off
   operation-2xx-response: error
   operation-4xx-response: error
   paths-kebab-case: error
+  parameter-description: error
   no-http-verbs-in-paths:
     severity: error
     splitIntoWords: true
@@ -22,3 +22,51 @@ rules:
       type: SchemaProperties
     assertions:
       pattern: /^[a-z0-9]+(_[a-z0-9]+)*$|^[A-Z0-9]+(_[A-Z0-9]+)*$/
+  rule/query-snakecase-screaming:
+    severity: error
+    where:
+      - subject:
+          type: Parameter
+          property: in
+        assertions:
+          const: query
+    subject:
+      type: Parameter
+      property: name
+    assertions:
+      pattern: /^[a-z0-9]+(_[a-z0-9]+)*$|^[A-Z0-9]+(_[A-Z0-9]+)*$/
+  rule/delete-should-not-define-requestBody:
+    severity: error
+    message: '"DELETE" SHOULD NOT define a "requestBody" schema'
+    subject:
+      type: Operation
+      filterInParentKeys:
+        - delete
+    assertions:
+      disallowed:
+        - requestBody
+  rule/get-should-not-define-requestBody:
+    severity: error
+    message: '"GET" SHOULD NOT define a "requestBody" schema'
+    subject:
+      type: Operation
+      filterInParentKeys:
+        - get
+    assertions:
+      disallowed:
+        - requestBody
+  rule/required-items-in-array-schemas:
+    severity: error
+    subject:
+      type: Schema
+    assertions:
+      required:
+        - items
+    where:
+      - subject:
+          type: Schema
+          property: type
+        assertions:
+          const: array
+          defined: true
+    message: The 'items' field is required for schemas of array type.
