@@ -22,6 +22,19 @@ rules:
       type: SchemaProperties
     assertions:
       pattern: /^[a-z0-9]+(_[a-z0-9]+)*$|^[A-Z0-9]+(_[A-Z0-9]+)*$/
+  rule/query-snakecase-screaming:
+    severity: error
+    where:
+      - subject:
+          type: Parameter
+          property: in
+        assertions:
+          const: query
+    subject:
+      type: Parameter
+      property: name
+    assertions:
+      pattern: /^[a-z0-9]+(_[a-z0-9]+)*$|^[A-Z0-9]+(_[A-Z0-9]+)*$/
   rule/delete-should-not-define-requestBody:
     severity: error
     message: '"DELETE" SHOULD NOT define a "requestBody" schema'
