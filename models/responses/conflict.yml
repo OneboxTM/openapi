@@ -1,0 +1,5 @@
+description: Invalid current state
+content:
+  application/json:
+    schema:
+      $ref: "../error.yml"
